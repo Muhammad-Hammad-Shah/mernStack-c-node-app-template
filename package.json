@@ -6,14 +6,19 @@
     "scripts": {
         "format:fix": "prettier . --write",
         "format:check": "prettier . --check",
+        "lint:check": "eslint .",
+        "lint:fix": "eslint . --fix",
         "dev": "node src/server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Muhammad Hamamd Shah",
     "license": "ISC",
     "devDependencies": {
+        "@eslint/js": "^9.19.0",
         "@types/node": "^22.12.0",
+        "eslint": "^9.19.0",
         "prettier": "3.4.2",
-        "typescript": "^5.7.3"
+        "typescript": "^5.7.3",
+        "typescript-eslint": "^8.22.0"
     }
 }
