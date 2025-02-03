@@ -4,3 +4,6 @@
 
 - `rootDir` is used for where all the sourced files will found.
 - `Husky` is used as `git hook`.
+
+npm i express
+npm i -D nodemon ts-node @types/express
