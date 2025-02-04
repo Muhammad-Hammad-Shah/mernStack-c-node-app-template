@@ -1,14 +1,61 @@
-# mern-c-auth-service
+# MERN-C Auth Service
 
-- `outDir` is use for where the compiled js will go.In our case it will go into ./dist
+## Overview
 
-- `rootDir` is used for where all the sourced files will found.
-- `Husky` is used as `git hook`.
+The **MERN-C Auth Service** is a backend authentication service built with Express and TypeScript. It features structured logging using Winston, error handling with HTTP errors, and development tools like Nodemon and Husky for streamlined workflows.
 
-npm i express winston http-errors
-npm i -D nodemon ts-node @types/express @types/winston @types/http-errors
+## Project Structure
 
-will use winston for logger.
+### TypeScript Configuration
 
-- Logger -> file => make a file for it where it saves the logs in json format.
-- silent is used, to reduce the need of logger.
+- **`outDir`**: Specifies the directory where compiled JavaScript files will be stored. In this project, they are placed inside the `./dist` directory.
+- **`rootDir`**: Defines the directory where the source TypeScript files reside.
+
+### Git Hooks with Husky
+
+- **Husky** is used for automating Git hooks, enforcing quality control before commits and pushes.
+
+## Installation
+
+To set up the project, install the required dependencies:
+
+```sh
+npm install express winston http-errors
+```
+
+For development dependencies, install:
+
+```sh
+npm install -D nodemon ts-node @types/express @types/winston @types/http-errors jest ts-jest @types/jest supertest @types/supertest
+```
+
+```sh
+
+npx ts-jest config:init
+
+```
+
+## Logging with Winston
+
+- **Winston** is used for structured logging.
+- Logs are stored in JSON format in a dedicated file.
+- The **silent** mode can be enabled to suppress unnecessary logs.
+
+## Development
+
+Run the development server using:
+
+```sh
+npm run dev
+```
+
+## Contributing
+
+Pull requests are welcome! Make sure to follow best practices and test thoroughly before submitting changes.
+
+## License
+
+This project is licensed under the MIT License.
+
+"test": "echo \"Error: no test specified\" && exit 1",
+"test": "jest --watch --runInBand", // this is changed in package.json file for test by a library called jest
