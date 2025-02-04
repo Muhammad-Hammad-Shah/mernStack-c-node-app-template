@@ -5,8 +5,8 @@
 - `rootDir` is used for where all the sourced files will found.
 - `Husky` is used as `git hook`.
 
-npm i express winston
-npm i -D nodemon ts-node @types/express @types/winston
+npm i express winston http-errors
+npm i -D nodemon ts-node @types/express @types/winston @types/http-errors
 
 will use winston for logger.
 
