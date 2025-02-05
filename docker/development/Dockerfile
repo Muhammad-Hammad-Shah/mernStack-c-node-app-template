@@ -17,4 +17,5 @@ COPY . .
 EXPOSE 5501
 
 # The command to run our app
-CMD ["npm", "run", "dev"]
+CMD ["npx", "nodemon", "--legacy-watch", "src/server.ts"]
+

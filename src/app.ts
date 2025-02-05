@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
     // const err = createHttpError(401, 'you are not authorized');
 
     // next(err);
-    res.send('Welcome to the auth page ');
+    res.send('Welcome to the auth page from docker ');
 });
 
 /* Global error handler */

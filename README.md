@@ -61,6 +61,7 @@ This project is licensed under the MIT License.
 "test": "jest --watch --runInBand", // this is changed in package.json file for test by a library called jest
 
 `docker build -t auth-service:dev -f docker/development/Dockerfile .`
+
 ```sh
  This command is used to build a Docker image for the Auth Service in development mode. Let's break it down:
 
@@ -69,3 +70,9 @@ This project is licensed under the MIT License.
 - -f docker/development/Dockerfile → Specifies the Dockerfile located at docker/development/Dockerfile.
 - . → The dot (.) means that the current directory is used as the build context.
 ```
+
+docker run --rm -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules --env-file ${PWD}/.env -p 3001:3001 -e NODE_ENV=development auth-service:dev
+
+- _For Changes_
+
+docker run --rm -it -v "%CD%":/usr/src/app -v /usr/src/app/node_modules --env-file "%CD%"\.env -p 3001:3001 -e NODE_ENV=development auth-service:dev npx nodemon --legacy-watch src/server.ts
