@@ -59,3 +59,13 @@ This project is licensed under the MIT License.
 
 "test": "echo \"Error: no test specified\" && exit 1",
 "test": "jest --watch --runInBand", // this is changed in package.json file for test by a library called jest
+
+`docker build -t auth-service:dev -f docker/development/Dockerfile .`
+```sh
+ This command is used to build a Docker image for the Auth Service in development mode. Let's break it down:
+
+- docker build → Command to create a Docker image.
+- -t auth-service:dev → Tags the image as auth-service:dev (useful for versioning).
+- -f docker/development/Dockerfile → Specifies the Dockerfile located at docker/development/Dockerfile.
+- . → The dot (.) means that the current directory is used as the build context.
+```
