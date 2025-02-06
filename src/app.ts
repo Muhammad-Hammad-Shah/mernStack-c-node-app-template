@@ -1,6 +1,7 @@
 import express, { Response, Request, NextFunction } from 'express';
 import logger from './config/logger';
 import { HttpError } from 'http-errors';
+import authRouter from './routes/auth';
 
 const app = express();
 
@@ -10,6 +11,8 @@ app.get('/', (req, res) => {
     // next(err);
     res.send('Welcome to the auth page from docker ');
 });
+
+app.use('/auth', authRouter);
 
 /* Global error handler */
 

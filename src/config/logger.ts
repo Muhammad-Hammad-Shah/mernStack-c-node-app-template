@@ -23,7 +23,7 @@ const logger = winston.createLogger({
             filename: 'error.log',
             format: winston.format.combine(
                 winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-                // winston.format.colorize({ all: true }),
+                // wwwwwinston.format.colorize({ all: true }),
                 winston.format.json(),
                 winston.format.prettyPrint(),
             ),

@@ -76,3 +76,13 @@ docker run --rm -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules --env-fi
 - _For Changes_
 
 docker run --rm -it -v "%CD%":/usr/src/app -v /usr/src/app/node_modules --env-file "%CD%"\.env -p 3001:3001 -e NODE_ENV=development auth-service:dev npx nodemon --legacy-watch src/server.ts
+
+// If container is running in interactive mode.
+ctr + c
+
+// If container is running in detached mode.
+// List all running container
+docker ps
+
+// Stop the container using container id
+docker stop <container id>
