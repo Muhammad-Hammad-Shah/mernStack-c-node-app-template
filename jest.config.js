@@ -1,7 +1,9 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
-module.exports = {
-    testEnvironment: 'node',
-    transform: {
+module.exports = { transform: {
         '^.+.tsx?$': ['ts-jest', {}],
     },
+    preset:"ts-jest",
+    testEnvironment: 'node',
+   
+    verbose: true,
 };

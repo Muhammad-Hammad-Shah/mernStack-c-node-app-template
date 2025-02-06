@@ -86,3 +86,69 @@ docker ps
 
 // Stop the container using container id
 docker stop <container id>
+
+docker volume create <anyname for volume>
+docker volume ls
+
+### Running PostgreSQL with Docker on Windows CMD
+
+**Command:**
+
+```cmd
+docker run --rm --name mernpg-container -e "POSTGRES_USER=root" -e "POSTGRES_PASSWORD=root" -v mernpgdata:/var/lib/postgresql/data -p 5432:5432 -d postgres
+```
+
+**Explanation:**
+
+- `--rm`: Automatically removes the container after it stops, ensuring no leftover containers consume space.
+- `--name mernpg-container`: Assigns the name **mernpg-container** to the running container for easy reference.
+- `-e "POSTGRES_USER=root"`: Sets the environment variable **POSTGRES_USER** to **root**. _(Quotes are necessary in Windows CMD)_
+- `-e "POSTGRES_PASSWORD=root"`: Sets the environment variable **POSTGRES_PASSWORD** to **root**.
+- `-v mernpgdata:/var/lib/postgresql/data`: Mounts a Docker volume named **mernpgdata** to persist PostgreSQL data even after the container is removed.
+- `-p 5432:5432`: Maps port **5432** on your local machine to port **5432** in the container, allowing access to PostgreSQL.
+- `-d`: Runs the container in **detached mode** (in the background), so your terminal remains free for other commands.
+
+---
+
+**Accessing PostgreSQL:**
+After running the command, you can connect to PostgreSQL using tools like **pgAdmin**, **DBeaver**, or via the command line:
+
+```bash
+psql -h localhost -U root -p 5432
+```
+
+**Stopping the Container:**
+Since the `--rm` flag automatically removes the container on stop, you can simply stop it using:
+
+```cmd
+docker stop mernpg-container
+```
+
+**Checking Running Containers:**
+To verify if your container is running:
+
+```cmd
+docker ps
+```
+
+---
+
+This setup ensures a clean PostgreSQL instance every time you run the container, with data persistence managed via the **mernpgdata** volume.
+
+we will be using typeORM
+
+Install the npm package:
+
+npm install typeorm --save
+
+You need to install reflect-metadata shim:
+
+npm install reflect-metadata --save
+
+and import it somewhere in the global place of your app (for example in app.ts):
+
+import "reflect-metadata"
+
+for PostgreSQL or CockroachDB
+
+npm install pg --save
