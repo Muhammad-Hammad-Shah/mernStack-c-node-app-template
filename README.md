@@ -152,3 +152,5 @@ import "reflect-metadata"
 for PostgreSQL or CockroachDB
 
 npm install pg --save
+
+config({path : path.join(\_\_dirname, `../../.env.${process.env.NODE_ENV}`)}); // explain it
