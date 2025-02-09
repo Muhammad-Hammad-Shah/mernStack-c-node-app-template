@@ -29,10 +29,10 @@ For development dependencies, install:
 npm install -D nodemon ts-node @types/express @types/winston @types/http-errors jest ts-jest @types/jest supertest @types/supertest
 ```
 
+Initialize Jest for TypeScript:
+
 ```sh
-
 npx ts-jest config:init
-
 ```
 
 ## Logging with Winston
@@ -49,108 +49,149 @@ Run the development server using:
 npm run dev
 ```
 
-## Contributing
+## Testing
 
-Pull requests are welcome! Make sure to follow best practices and test thoroughly before submitting changes.
+The test script is configured to use Jest:
 
-## License
-
-This project is licensed under the MIT License.
-
-"test": "echo \"Error: no test specified\" && exit 1",
-"test": "jest --watch --runInBand", // this is changed in package.json file for test by a library called jest
-
-`docker build -t auth-service:dev -f docker/development/Dockerfile .`
-
-```sh
- This command is used to build a Docker image for the Auth Service in development mode. Let's break it down:
-
-- docker build → Command to create a Docker image.
-- -t auth-service:dev → Tags the image as auth-service:dev (useful for versioning).
-- -f docker/development/Dockerfile → Specifies the Dockerfile located at docker/development/Dockerfile.
-- . → The dot (.) means that the current directory is used as the build context.
+```json
+"test": "jest --watch --runInBand"
 ```
 
+Run tests using:
+
+```sh
+npm test
+```
+
+## Docker Setup
+
+### Building the Docker Image
+
+```sh
+docker build -t auth-service:dev -f docker/development/Dockerfile .
+```
+
+**Explanation:**
+
+- `docker build`: Command to create a Docker image.
+- `-t auth-service:dev`: Tags the image as `auth-service:dev` (useful for versioning).
+- `-f docker/development/Dockerfile`: Specifies the Dockerfile located at `docker/development/Dockerfile`.
+- `.`: Uses the current directory as the build context.
+
+### Running the Docker Container
+
+```sh
 docker run --rm -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules --env-file ${PWD}/.env -p 3001:3001 -e NODE_ENV=development auth-service:dev
+```
 
-- _For Changes_
+**For Changes (with Nodemon):**
 
+```sh
 docker run --rm -it -v "%CD%":/usr/src/app -v /usr/src/app/node_modules --env-file "%CD%"\.env -p 3001:3001 -e NODE_ENV=development auth-service:dev npx nodemon --legacy-watch src/server.ts
+```
 
-// If container is running in interactive mode.
-ctr + c
+### Stopping Docker Containers
 
-// If container is running in detached mode.
-// List all running container
-docker ps
+- **If running in interactive mode:**
 
-// Stop the container using container id
-docker stop <container id>
+    - Press `Ctrl + C`.
 
-docker volume create <anyname for volume>
-docker volume ls
+- **If running in detached mode:**
+    - List all running containers:
+        ```sh
+        docker ps
+        ```
+    - Stop the container using the container ID:
+        ```sh
+        docker stop <container_id>
+        ```
 
-### Running PostgreSQL with Docker on Windows CMD
+### Managing Docker Volumes
 
-**Command:**
+- Create a volume:
+    ```sh
+    docker volume create <volume_name>
+    ```
+- List volumes:
+    ```sh
+    docker volume ls
+    ```
+
+## Running PostgreSQL with Docker on Windows CMD
+
+### Command
 
 ```cmd
 docker run --rm --name mernpg-container -e "POSTGRES_USER=root" -e "POSTGRES_PASSWORD=root" -v mernpgdata:/var/lib/postgresql/data -p 5432:5432 -d postgres
 ```
 
-**Explanation:**
+### Explanation
 
-- `--rm`: Automatically removes the container after it stops, ensuring no leftover containers consume space.
-- `--name mernpg-container`: Assigns the name **mernpg-container** to the running container for easy reference.
-- `-e "POSTGRES_USER=root"`: Sets the environment variable **POSTGRES_USER** to **root**. _(Quotes are necessary in Windows CMD)_
-- `-e "POSTGRES_PASSWORD=root"`: Sets the environment variable **POSTGRES_PASSWORD** to **root**.
-- `-v mernpgdata:/var/lib/postgresql/data`: Mounts a Docker volume named **mernpgdata** to persist PostgreSQL data even after the container is removed.
-- `-p 5432:5432`: Maps port **5432** on your local machine to port **5432** in the container, allowing access to PostgreSQL.
-- `-d`: Runs the container in **detached mode** (in the background), so your terminal remains free for other commands.
+- `--rm`: Automatically removes the container after it stops.
+- `--name mernpg-container`: Names the container `mernpg-container`.
+- `-e "POSTGRES_USER=root"`: Sets the PostgreSQL user to `root`.
+- `-e "POSTGRES_PASSWORD=root"`: Sets the PostgreSQL password to `root`.
+- `-v mernpgdata:/var/lib/postgresql/data`: Mounts a Docker volume named `mernpgdata` for data persistence.
+- `-p 5432:5432`: Maps port 5432 on your machine to the container.
+- `-d`: Runs the container in detached mode.
 
----
+### Accessing PostgreSQL
 
-**Accessing PostgreSQL:**
-After running the command, you can connect to PostgreSQL using tools like **pgAdmin**, **DBeaver**, or via the command line:
+Connect using tools like **pgAdmin**, **DBeaver**, or via the command line:
 
 ```bash
 psql -h localhost -U root -p 5432
 ```
 
-**Stopping the Container:**
-Since the `--rm` flag automatically removes the container on stop, you can simply stop it using:
+### Stopping the PostgreSQL Container
+
+Since the `--rm` flag removes the container upon stopping, you can stop it using:
 
 ```cmd
 docker stop mernpg-container
 ```
 
-**Checking Running Containers:**
-To verify if your container is running:
+### Checking Running Containers
 
 ```cmd
 docker ps
 ```
 
----
+## Using TypeORM
 
-This setup ensures a clean PostgreSQL instance every time you run the container, with data persistence managed via the **mernpgdata** volume.
+Install TypeORM and related dependencies:
 
-we will be using typeORM
+```sh
+npm install typeorm reflect-metadata pg
+```
 
-Install the npm package:
+Import `reflect-metadata` in your main file (e.g., `app.ts`):
 
-npm install typeorm --save
+```typescript
+import 'reflect-metadata';
+```
 
-You need to install reflect-metadata shim:
+## Environment Configuration
 
-npm install reflect-metadata --save
+To manage environment-specific settings, use the following configuration:
 
-and import it somewhere in the global place of your app (for example in app.ts):
+```typescript
+config({ path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`) });
+```
 
-import "reflect-metadata"
+This dynamically loads environment variables based on the current `NODE_ENV`.
 
-for PostgreSQL or CockroachDB
+## Best Practices
 
-npm install pg --save
+- **Controller Files:** Should only contain TypeScript code for consistency and maintainability.
+- **Testing:** Ideally, each test should have its own `expect()` statement. However, in cases where conditions are highly related, multiple assertions can be combined in one test.
 
-config({path : path.join(\_\_dirname, `../../.env.${process.env.NODE_ENV}`)}); // explain it
+data base k realated jtna b kam h wo sara dosri file " services" m hona chahiye controller ko lightwieght rkna h , controller m sirf framework relate code hona chahiye
+
+agr hm service layer ko framework sy alag rkhty hn tw best practice b aur bht kam ka b hota h for later uses.
+
+class banane k bad usko dosri file m ya kahi aur use krne k liye uska instance bana na chahiye lazmi ( best practices )
+
+BP = best practices
+
+- jese k hamari controllers ki file coupled hogayi h with services file ye BP nhi h balky aik contructor bana kr `dependency injection` kr k use krlengy

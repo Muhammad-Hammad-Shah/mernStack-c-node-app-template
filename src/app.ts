@@ -7,6 +7,9 @@ import authRouter from './routes/auth';
 
 const app = express();
 
+// to parse the incoming request with JSON payloads ( mtlb jab bhi koi request aayegi toh usko json me convert karega )
+app.use(express.json());
+
 app.get('/', (req, res) => {
     // const err = createHttpError(401, 'you are not authorized');
 
