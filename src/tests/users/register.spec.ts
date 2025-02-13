@@ -64,11 +64,12 @@ describe('POST /auth/register', () => {
                 expect(users[0].firstName).toBe(userData.firstName);
                 expect(users[0].lastName).toBe(userData.lastName);
                 expect(users[0].email).toBe(userData.email);
+                expect(users[0].id).toBeDefined();
+                expect(typeof users[0].id).toBe('number');
             } catch (error) {
                 console.error('Error during test execution:', error);
                 throw error;
             }
-            it.todo('should return the id of the created user');
         });
     });
 
