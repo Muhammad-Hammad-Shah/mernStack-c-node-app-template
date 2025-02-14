@@ -20,13 +20,13 @@ The **MERN-C Auth Service** is a backend authentication service built with Expre
 To set up the project, install the required dependencies:
 
 ```sh
-npm install express winston http-errors bcrypt
+npm install express winston http-errors bcrypt  express-validator@6.15.0 
 ```
 
 For development dependencies, install:
 
 ```sh
-npm install -D nodemon ts-node @types/express @types/winston @types/http-errors jest ts-jest @types/jest supertest @types/supertest @types/bcrypt
+npm install -D nodemon ts-node @types/express @types/winston @types/http-errors jest ts-jest @types/jest supertest @types/supertest @types/bcrypt 
 ```
 
 Initialize Jest for TypeScript:
@@ -213,3 +213,7 @@ clear coding  , also read about it.>> never have a digit number ( 1,2,45,34) dir
 
 - pehle hm n application level pr email ko banaya
 - ab DB level pr isko unique banaya h.
+
+## Email field Validation
+
+- kabi b client k barose nhi rehna, har aik field ko separately validate kr krna hoga
