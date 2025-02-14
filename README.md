@@ -20,13 +20,13 @@ The **MERN-C Auth Service** is a backend authentication service built with Expre
 To set up the project, install the required dependencies:
 
 ```sh
-npm install express winston http-errors
+npm install express winston http-errors bcrypt
 ```
 
 For development dependencies, install:
 
 ```sh
-npm install -D nodemon ts-node @types/express @types/winston @types/http-errors jest ts-jest @types/jest supertest @types/supertest
+npm install -D nodemon ts-node @types/express @types/winston @types/http-errors jest ts-jest @types/jest supertest @types/supertest @types/bcrypt
 ```
 
 Initialize Jest for TypeScript:
@@ -196,5 +196,12 @@ BP = best practices
 
 - jese k hamari controllers ki file coupled hogayi h with services file ye BP nhi h balky aik contructor bana kr `dependency injection` kr k use krlengy
 
+kabi b roles etc jesi cheezon ko hardcoat "admin" , "customer" nhi likhna chahiye blky ya `enum` bana kr ya `object` bana kr use krna chahiye >>>>>> jo k hm aik alag file m b rkh skty hn jese `constants/index.ts` etc
 
-kabi b roles etc jesi cheezon ko hardcoat "admin" , "customer" nhi likhna chahiye blky ya `enum` bana kr ya `object` bana kr use krna chahiye >>>>>> jo k hm aik alag file  m b rkh skty hn jese `constants/index.ts` etc
+## Password hashing
+
+```
+have to read about regular expression must
+clear coding  , also read about it.>> never have a digit number ( 1,2,45,34) directly in the code.
+
+```

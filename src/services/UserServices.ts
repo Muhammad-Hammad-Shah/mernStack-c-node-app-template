@@ -3,7 +3,8 @@ import { Repository } from 'typeorm';
 import { User } from '../entity/User';
 import { UserData } from '../types';
 import createHttpError from 'http-errors';
-import { Roles } from '../constants';
+import { Roles, saltRounds } from '../constants';
+import bcrypt from 'bcrypt';
 
 export class UserService {
     constructor(private userRepository: Repository<User>) {}
@@ -15,12 +16,17 @@ export class UserService {
         password,
     }: UserData): Promise<User> {
         // const userRepository = AppDataSource.getRepository(User); // ye coupled code tha isko neechy decouple k zrye krdia hahaha
+
+        /* Hash the Password */
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        //
         try {
             const newUser = this.userRepository.create({
                 firstName,
                 lastName,
                 email,
-                password,
+                password: hashedPassword,
                 role: Roles.CUSTOMER,
             });
             const savedUser = await this.userRepository.save(newUser);
