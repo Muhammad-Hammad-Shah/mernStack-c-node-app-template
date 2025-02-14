@@ -217,3 +217,11 @@ clear coding  , also read about it.>> never have a digit number ( 1,2,45,34) dir
 ## Email field Validation
 
 - kabi b client k barose nhi rehna, har aik field ko separately validate kr krna hoga
+
+### Sanitizing Request Fields
+
+- Sanitizing means k agr hamare request k andr agr kch white spaces ho unko escape krna, like agr client koi code bej raha backend ki trf tw hm uso escape krwa skty hn.
+
+- attacks sy bachne k liye like from `cross-site Scripting vulnerability (XSS)`
+
+- trimming krna , agr client email k start m ya end m spacing de deta h ghalti sy tw usko handle krna ya trim krna both sides sy white spaces ko.
