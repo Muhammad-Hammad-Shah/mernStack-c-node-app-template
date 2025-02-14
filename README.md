@@ -205,3 +205,11 @@ have to read about regular expression must
 clear coding  , also read about it.>> never have a digit number ( 1,2,45,34) directly in the code.
 
 ```
+
+## email validation
+
+- agr hmien DB m unique email check krni h tw TDD m first `it` k zrye DB k andr aik record create krengy aur phir same email sy compare kr k check krengy
+  k whether they are same or not.
+
+- pehle hm n application level pr email ko banaya
+- ab DB level pr isko unique banaya h.

@@ -15,6 +15,18 @@ export class UserService {
         email,
         password,
     }: UserData): Promise<User> {
+        // check for user email
+        const user = await this.userRepository.findOne({
+            where: {
+                email: email,
+            },
+        });
+
+        if (user) {
+            const err = createHttpError(400, 'Email already Exists!');
+            throw err;
+        }
+
         // const userRepository = AppDataSource.getRepository(User); // ye coupled code tha isko neechy decouple k zrye krdia hahaha
 
         /* Hash the Password */
