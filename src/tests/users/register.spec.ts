@@ -6,7 +6,8 @@ import app from '../../app';
 import { User } from '../../entity/User';
 import { DataSource } from 'typeorm';
 import { AppDataSource } from '../../config/data-source';
-import { truncateTables } from '../utils';
+import { Roles } from '../../constants';
+// import { truncateTables } from '../utils';
 
 describe('POST /auth/register', () => {
     let connection: DataSource;
@@ -22,7 +23,9 @@ describe('POST /auth/register', () => {
     beforeEach(async () => {
         try {
             // DB truncate
-            await truncateTables(connection);
+            await connection.dropDatabase();
+            await connection.synchronize();
+            // await truncateTables(connection);
         } catch (error) {
             console.error('Error during table truncation:', error);
         }
@@ -70,6 +73,27 @@ describe('POST /auth/register', () => {
                 console.error('Error during test execution:', error);
                 throw error;
             }
+        });
+        it('should assign a customer role.', async () => {
+            // Arrange
+            const userData = {
+                firstName: 'Muhammad Hamamd',
+                lastName: 'Shah',
+                email: 'hammad2233shah3322@gmail.com',
+                password: 'secret',
+            };
+            // Act
+
+            await request(app).post('/auth/register').send(userData);
+            // Assert
+
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+
+            // expectations
+
+            expect(users[0]).toHaveProperty('role');
+            expect(users[0].role).toBe(Roles.CUSTOMER);
         });
     });
 

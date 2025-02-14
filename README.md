@@ -195,3 +195,6 @@ class banane k bad usko dosri file m ya kahi aur use krne k liye uska instance b
 BP = best practices
 
 - jese k hamari controllers ki file coupled hogayi h with services file ye BP nhi h balky aik contructor bana kr `dependency injection` kr k use krlengy
+
+
+kabi b roles etc jesi cheezon ko hardcoat "admin" , "customer" nhi likhna chahiye blky ya `enum` bana kr ya `object` bana kr use krna chahiye >>>>>> jo k hm aik alag file  m b rkh skty hn jese `constants/index.ts` etc
