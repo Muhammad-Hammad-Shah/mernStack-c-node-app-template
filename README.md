@@ -20,13 +20,13 @@ The **MERN-C Auth Service** is a backend authentication service built with Expre
 To set up the project, install the required dependencies:
 
 ```sh
-npm install express winston http-errors bcrypt  express-validator@6.15.0 
+npm install express winston http-errors bcrypt  express-validator@6.15.0
 ```
 
 For development dependencies, install:
 
 ```sh
-npm install -D nodemon ts-node @types/express @types/winston @types/http-errors jest ts-jest @types/jest supertest @types/supertest @types/bcrypt 
+npm install -D nodemon ts-node @types/express @types/winston @types/http-errors jest ts-jest @types/jest supertest @types/supertest @types/bcrypt
 ```
 
 Initialize Jest for TypeScript:
