@@ -49,9 +49,33 @@ export class AuthController {
             this.logger.info('User has been registered', {
                 id: user.id,
             });
-            res.status(201).json({
-                id: user.id,
+            // res.status(201).json({
+            //     id: user.id,            // isko kabi b upar na rkna warna response a result pehle hi chala jayega
+            // });
+
+            const accessToken = 'test-access-token'; // Replace with real JWT logic
+            const refreshToken = 'test-refresh-token'; // Replace with real JWT logic
+
+            //       first one is name (like name of column etc) ; second one is value
+            res.cookie('accessToken', accessToken, {
+                domain: 'localhost',
+                sameSite: 'lax',
+                maxAge: 1000 * 60 * 60, // 1h
+                httpOnly: true, // very important or it can be hacked.
+                // secure: false,
             });
+            //       first one is name (like name of column etc) ; second one is value
+            res.cookie('refreshToken', refreshToken, {
+                domain: 'localhost',
+                sameSite: 'lax',
+                maxAge: 1000 * 60 * 60 * 24 * 365, // 1Y
+                httpOnly: true, // very important or it can be hacked.
+                // secure: false,
+            });
+            console.log('Response Heade rs:', res.getHeaders());
+            return res
+                .status(201)
+                .json({ id: user.id, message: 'User registered' });
         } catch (err) {
             next(err);
             return;

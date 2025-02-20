@@ -7,6 +7,8 @@ import { User } from '../../entity/User';
 import { DataSource } from 'typeorm';
 import { AppDataSource } from '../../config/data-source';
 import { Roles } from '../../constants';
+import { isJwt } from '../utils';
+
 // import { truncateTables } from '../utils';
 
 describe('POST /auth/register', () => {
@@ -52,27 +54,27 @@ describe('POST /auth/register', () => {
                 password: 'secret',
             };
             // Act
-            try {
-                const response = await request(app)
-                    .post('/auth/register')
-                    .send(userData);
-                // Assert
-                expect(response.status).toBe(201);
+            // try {
+            const response = await request(app)
+                .post('/auth/register')
+                .send(userData);
+            // Assert
+            expect(response.status).toBe(201);
 
-                const userRepository = connection.getRepository(User);
-                const users = await userRepository.find();
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
 
-                //
-                expect(users).toHaveLength(1);
-                expect(users[0].firstName).toBe(userData.firstName);
-                expect(users[0].lastName).toBe(userData.lastName);
-                expect(users[0].email).toBe(userData.email);
-                expect(users[0].id).toBeDefined();
-                expect(typeof users[0].id).toBe('number');
-            } catch (error) {
-                console.error('Error during test execution:', error);
-                throw error;
-            }
+            //
+            expect(users).toHaveLength(1);
+            expect(users[0].firstName).toBe(userData.firstName);
+            expect(users[0].lastName).toBe(userData.lastName);
+            expect(users[0].email).toBe(userData.email);
+            // expect(users[0].id).toBeDefined();
+            // expect(typeof users[0].id).toBe('number');
+            // } catch (error) {
+            //     console.error('Error during test execution:', error);
+            //     throw error;
+            // }
         });
         it('should assign a customer role.', async () => {
             // Arrange
@@ -136,6 +138,94 @@ describe('POST /auth/register', () => {
             const users = await userRepository.find();
             expect((await response).statusCode).toBe(400);
             expect(users).toHaveLength(1);
+        });
+        it('should return acces token and refresh token inside a cookie', async () => {
+            // Arrange
+            const userData = {
+                firstName: 'Muhammad Hamamd',
+                lastName: 'Shah',
+                email: 'hammad2233shah3322@gmail.com',
+                password: 'secret',
+            };
+            // Act
+            try {
+                const response = await request(app)
+                    .post('/auth/register')
+                    .send(userData);
+
+                // interfaces for header
+
+                interface Headers {
+                    ['set-cookie']?: string[];
+                }
+
+                // Assert
+
+                let accessToken: string | null = null;
+                let refreshToken: string | null = null;
+                const cookies =
+                    (response.headers as Headers)['set-cookie'] || [];
+
+                cookies.forEach((cookie) => {
+                    if (cookie.startsWith('accessToken=')) {
+                        accessToken = cookie.split(';')[0].split('=')[1];
+                    }
+                    if (cookie.startsWith('refreshToken=')) {
+                        refreshToken = cookie.split(';')[0].split('=')[1];
+                    }
+                });
+
+                // expections
+                // console.log('this is console.log from test', cookies);
+                console.log('Full Response:', response);
+                console.log('Response Headers:', response.headers);
+                console.log(
+                    'Cookies:',
+                    (response.headers as Headers)['set-cookie'] || [],
+                );
+                console.log('Setting Cookies:', {
+                    accessToken,
+                    refreshToken,
+                });
+
+                expect(accessToken).not.toBeNull();
+                expect(refreshToken).not.toBeNull();
+
+                // to check format of tokens (means k token valid h ya nhi h)
+
+                expect(isJwt(accessToken)).toBeTruthy();
+                expect(isJwt(refreshToken)).toBeTruthy();
+            } catch (error) {
+                console.error('Error during test execution:', error);
+                throw error;
+            }
+        });
+        it('should return the id of user created', async () => {
+            // Arrange
+            const userData = {
+                firstName: 'Muhammad Hamamd',
+                lastName: 'Shah',
+                email: 'hammad2233shah3322@gmail.com',
+                password: 'secret',
+            };
+            // Act
+            // try {
+            const response = await request(app)
+                .post('/auth/register')
+                .send(userData);
+            // Assert
+            expect(response.status).toBe(201);
+
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+
+            //
+            expect(users).toHaveLength(1);
+            // expect(users[0].firstName).toBe(userData.firstName);
+            // expect(users[0].lastName).toBe(userData.lastName);
+            // expect(users[0].email).toBe(userData.email);
+            expect(users[0].id).toBeDefined();
+            expect(typeof users[0].id).toBe('number');
         });
     });
 

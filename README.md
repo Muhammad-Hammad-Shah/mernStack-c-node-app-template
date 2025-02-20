@@ -225,3 +225,15 @@ clear coding  , also read about it.>> never have a digit number ( 1,2,45,34) dir
 - attacks sy bachne k liye like from `cross-site Scripting vulnerability (XSS)`
 
 - trimming krna , agr client email k start m ya end m spacing de deta h ghalti sy tw usko handle krna ya trim krna both sides sy white spaces ko.
+
+- in node js we have a `Buffer`, it is used for.................
+- refreshToken! , here `!` means k hm sure hn yhn string hi hogi, typescript ko keh rahe hn
+
+-   - typeORM m relations prhne hn lazmi
+-   - `Record<string , string>` kia hota h
+
+- res.json ko kabi b upar na rkna warna response a result pehle hi chala jayega
+
+- `JWT` k theen parts hoty hn aur theeno `.` sy split hoty hn, aur theeno base64 m encoded hoty hn.
+
+- `Buffer` kia krta h?
